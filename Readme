@@ -1,0 +1,11 @@
+Compilar no terminal com javac Fourconnect.java && java Fourconnect  (Se necessário pode usar o ficheiro input.txt)
+
+1st step : escolher 1 jogador,
+2nd step : escolher se quer começar em primeiro ou segundo em relaçao ao bot,
+3rd step : escolher a ia adversária,  ( O MonteCarlo é montecarlo, mas não é tree search)
+
+Feito com muito Carinho, Divirta-se prof :)
+
+Compilado no fedora 37 com java 17
+
+

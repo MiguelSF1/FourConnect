@@ -1,7 +1,9 @@
-# Connect Four game
+# Connect Four game for AI class project
 
-Compile with javac Fourconnect.java && java Fourconnect
+Compile with javac Fourconnect.java
 
-Compiled on fedora 37 with java 17
+Run with java Fourconnect.java
+
+
 
 

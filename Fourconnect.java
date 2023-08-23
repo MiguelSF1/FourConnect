@@ -29,7 +29,7 @@ public class Fourconnect {
                     board.player = 'X';
                 }
                 System.out.println("Play VS: ");
-                System.out.println("MinMax(1) | AlphaBeta(2) | MonteCarloTS(3) | MonteCarlo(4)");
+                System.out.println("MinMax(1) | AlphaBeta(2) | MonteCarlo(3)");
                 int ai = in.nextInt();
                 printBoard(board);
                 while (true) {
@@ -42,11 +42,8 @@ public class Fourconnect {
                                 board = board.play(AlphaBeta.AlphaBetaSearch(board));
                                 break;
                             case 3:
-                                board = board.play(teste2.mctsSearch(board));
+                                board = board.play(MonteCarlo.mctsSearch(board));
                                 break;
-                            case 4:
-                                board = board.play(teste.mctsSearch(board));
-                                break;            
                             default:
                                 break;
                         }

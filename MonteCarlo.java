@@ -1,7 +1,7 @@
 import java.lang.Math;
 import java.util.*;
 
-public class teste2 {
+public class MonteCarlo {
     private static final int SIMULATIONS = 4000;
 
     private static PriorityQueue<NodeMC> q = new PriorityQueue<>();

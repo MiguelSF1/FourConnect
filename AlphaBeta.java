@@ -1,5 +1,5 @@
 class AlphaBeta {
-    private static final int MAX_DEPTH = 13;
+    private static final int MAX_DEPTH = 7;
 
     public static int AlphaBetaSearch(Game state) {
         return maxSearch(state, 0, Integer.MIN_VALUE, Integer.MAX_VALUE).getMove();

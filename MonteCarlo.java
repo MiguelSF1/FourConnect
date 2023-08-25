@@ -1,5 +1,5 @@
 import java.lang.Math;
-import java.util.*;
+import java.util.PriorityQueue;
 
 public class MonteCarlo {
     private static final int SIMULATIONS = 4000;
@@ -11,6 +11,7 @@ public class MonteCarlo {
             NodeMC rootNode = new NodeMC(board, null, -1);
             q.add(rootNode);
         }
+
         NodeMC nGen;
         NodeMC bestMove = null;
         NodeMC explored = selection();
@@ -39,6 +40,7 @@ public class MonteCarlo {
 
     private static void simulation(NodeMC board) {
         NodeMC cur = board;
+
         while (!cur.getGame().isGameOver()) {
             cur.updateTimesPassed();
             int randomMove = (int) (Math.random() * 7);

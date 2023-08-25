@@ -3,7 +3,7 @@ public class Node implements Comparable<Node> {
     private final int col;
     private final double ucb;
 
-    Node(int col) {
+    Node (int col) {
         this.value = 0;
         this.col = col;
         this.ucb = 0;
@@ -20,7 +20,6 @@ public class Node implements Comparable<Node> {
     public void setValue(int value) {
         this.value = value;
     }
-
 
     public double getUCB() {
         return this.ucb;

@@ -8,7 +8,7 @@ public class NodeMC implements Comparable<NodeMC> {
     private int timesPassed;
     private NodeMC c1 = null, c2 = null, c3 = null, c4 = null, c5 = null, c6 = null, c0 = null;
 
-    NodeMC(Game board, NodeMC parent, int col) {
+    NodeMC (Game board, NodeMC parent, int col) {
         this.board = board;
         this.parent = parent;
         this.col = col;
@@ -54,7 +54,6 @@ public class NodeMC implements Comparable<NodeMC> {
     public int getMove() {
         return col;
     }
-
 
     public double getUCB() {
         return this.ucb;

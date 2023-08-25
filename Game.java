@@ -1,5 +1,4 @@
 public class Game {
-
     public char[][] game = new char[6][7];
     public char player;
     public char winner;
@@ -30,7 +29,7 @@ public class Game {
         return 'O';
     }
 
-    private boolean outBounds(int x, int y) {
+    private boolean notOutBounds(int x, int y) {
         return y >= 0 && y <= 6 && x <= 5 && x >= 0;
     }
 
@@ -42,7 +41,7 @@ public class Game {
         Game p = new Game();
 
         for (int i = 0; i < 6; i++) {
-            if (outBounds(i, a))
+            if (notOutBounds(i, a))
                 System.arraycopy(this.game[i], 0, p.game[i], 0, 7);
             else return this;
         }
@@ -113,7 +112,7 @@ public class Game {
             int newRow = row + rowDelta * i;
             int newCol = col + colDelta * i;
 
-            if (!outBounds(newRow, newCol)) return 0;
+            if (!notOutBounds(newRow, newCol)) return 0;
 
             if (cur == ' ' && game[newRow][newCol] != ' ') cur = game[newRow][newCol];
 

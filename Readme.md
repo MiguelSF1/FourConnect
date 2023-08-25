@@ -1,8 +1,8 @@
 # Connect Four game for AI class project
 
-Compile with javac Fourconnect.java
+Compile with javac Main.java
 
-Run with java Fourconnect.java
+Run with java Main.java
 
 
 

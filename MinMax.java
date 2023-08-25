@@ -1,5 +1,5 @@
 class MinMax {
-    private static int MAX_DEPTH = 7;
+    private static final int MAX_DEPTH = 7;
 
     public static int MinMaxSearch(Game board) {
         return maxSearch(board, 0).getMove();
@@ -7,7 +7,7 @@ class MinMax {
 
     private static Node maxSearch(Game board, int depth) {
         if (board.isGameOver() || depth == MAX_DEPTH) {
-            Node node = new Node(board, null, depth, -1);
+            Node node = new Node(-1);
             node.setValue(board.value());
             return node;
         }
@@ -18,7 +18,7 @@ class MinMax {
         boolean anyMovePossible = false;
 
         for (int i = 0; i < 7; i++) {
-            if (!board.isColumnFull(i)) {
+            if (board.isColumnNotFull(i)) {
                 anyMovePossible = true;
                 Game nGen = board.play(i);
                 if (nGen != board) {
@@ -31,19 +31,19 @@ class MinMax {
             }
         }
         if (!anyMovePossible) {
-            Node node = new Node(board, null, depth, -1);
+            Node node = new Node(-1);
             node.setValue(0);
             return node;
         }
 
-        Node result = new Node(board, null, depth, bestMove);
+        Node result = new Node(bestMove);
         result.setValue(maxValue);
         return result;
     }
 
     private static Node minSearch(Game board, int depth) {
         if (board.isGameOver() || depth == MAX_DEPTH) {
-            Node node = new Node(board, null, depth, -1);
+            Node node = new Node(-1);
             node.setValue(board.value());
             return node;
         }
@@ -52,7 +52,7 @@ class MinMax {
         int minValue = Integer.MAX_VALUE;
 
         for (int i = 0; i < 7; i++) {
-            if (!board.isColumnFull(i)) {
+            if (board.isColumnNotFull(i)) {
                 Game nGen = board.play(i);
                 if (nGen != board) {
                     Node maxNode = maxSearch(nGen, depth + 1);
@@ -64,7 +64,7 @@ class MinMax {
             }
         }
 
-        Node result = new Node(board, null, depth, bestMove);
+        Node result = new Node(bestMove);
         result.setValue(minValue);
         return result;
     }

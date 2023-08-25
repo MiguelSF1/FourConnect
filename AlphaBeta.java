@@ -1,5 +1,5 @@
 class AlphaBeta {
-    private static int MAX_DEPTH = 13;
+    private static final int MAX_DEPTH = 13;
 
     public static int AlphaBetaSearch(Game state) {
         return maxSearch(state, 0, Integer.MIN_VALUE, Integer.MAX_VALUE).getMove();
@@ -7,7 +7,7 @@ class AlphaBeta {
 
     private static Node maxSearch(Game state, int depth, int alpha, int beta) {
         if (state.isGameOver() || depth == MAX_DEPTH) {
-            Node node = new Node(state, null, depth, -1);
+            Node node = new Node(-1);
             node.setValue(state.value());
             return node;
         }
@@ -16,7 +16,7 @@ class AlphaBeta {
         int maxValue = Integer.MIN_VALUE;
 
         for (int i = 0; i < 7; i++) {
-            if (!state.isColumnFull(i)) {
+            if (state.isColumnNotFull(i)) {
                 Game child = state.play(i);
                 if (child != state) {
                     Node minNode = minSearch(child, depth + 1, alpha, beta);
@@ -32,14 +32,14 @@ class AlphaBeta {
             }
         }
 
-        Node result = new Node(state, null, depth, bestMove);
+        Node result = new Node(bestMove);
         result.setValue(maxValue);
         return result;
     }
 
     private static Node minSearch(Game state, int depth, int alpha, int beta) {
         if (state.isGameOver() || depth == MAX_DEPTH) {
-            Node node = new Node(state, null, depth, -1);
+            Node node = new Node(-1);
             node.setValue(state.value());
             return node;
         }
@@ -48,7 +48,7 @@ class AlphaBeta {
         int minValue = Integer.MAX_VALUE;
 
         for (int i = 0; i < 7; i++) {
-            if (!state.isColumnFull(i)) {
+            if (state.isColumnNotFull(i)) {
                 Game child = state.play(i);
                 if (child != state) {
                     Node maxNode = maxSearch(child, depth + 1, alpha, beta);
@@ -64,7 +64,7 @@ class AlphaBeta {
             }
         }
 
-        Node result = new Node(state, null, depth, bestMove);
+        Node result = new Node(bestMove);
         result.setValue(minValue);
         return result;
     }

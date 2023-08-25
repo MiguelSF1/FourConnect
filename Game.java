@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Game {
 
     public char[][] game = new char[6][7];
@@ -32,22 +30,12 @@ public class Game {
         return 'O';
     }
 
-    public int howEmpty() {
-        int count = 0;
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (game[i][j] == ' ') count++;
-            }
-        }
-        return count;
-    }
-
     private boolean outBounds(int x, int y) {
         return y >= 0 && y <= 6 && x <= 5 && x >= 0;
     }
 
-    public boolean isColumnFull(int coluna) {
-        return game[0][coluna] != ' ';
+    public boolean isColumnNotFull(int column) {
+        return game[0][column] == ' ';
     }
 
     public Game play(int a) {
@@ -106,21 +94,13 @@ public class Game {
         return this.winner;
     }
 
-    public List<Integer> getPossibleMoves() {
-        List<Integer> moves = new ArrayList<>();
-
-        for (int i = 0; i < 7; i++)
-            if (!isColumnFull(i)) moves.add(i);
-
-        return moves;
-    }
 
     public int value() {
         int total = 0;
 
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 7; j++)
-                total += vertical(i, j) + horizontal(i, j) + dEsquerda(i, j) + dDireita(i, j);
+                total += vertical(i, j) + horizontal(i, j) + leftDir(i, j) + rightDir(i, j);
 
         return total;
     }
@@ -143,7 +123,7 @@ public class Game {
                 points = -3;
         }
 
-        return paridade(points, cur);
+        return parity(points, cur);
     }
 
     private int vertical(int a, int b) {
@@ -158,19 +138,19 @@ public class Game {
         return 0;
     }
 
-    private int dDireita(int a, int b) {
+    private int rightDir(int a, int b) {
         if (a > 3 && b < 4) return checkLine(a, b, -1, 1);
 
         return 0;
     }
 
-    private int dEsquerda(int a, int b) {
+    private int leftDir(int a, int b) {
         if (a > 3 && b > 2) return checkLine(a, b, -1, -1);
 
         return 0;
     }
 
-    private int paridade(int points, char cur) {
+    private int parity(int points, char cur) {
         if (points <= 0) return 0;
 
         else if (cur == 'O') {
@@ -186,11 +166,21 @@ public class Game {
         return 1000;
     }
 
-    public boolean isGameEqual(Game g) {
-        for (int i = 0; i < 6; i++)
-            for (int j = 0; j < 7; j++)
-                if (this.game[i][j] != g.game[i][j]) return false;
+    public void printBoard() {
+        System.out.println();
+        this.myToString();
+        System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n");
+        System.out.println("Points: " + this.value());
+        System.out.println();
+    }
 
-        return true;
+    public void verifyVictory() {
+        char winner = this.getWinner();
+        if (winner == 'X')
+            System.out.println("X wins with: " + this.value());
+        else if (winner == 'O')
+            System.out.println("O wins with: " + this.value());
+        else
+            System.out.println("Draw with: " + this.value());
     }
 }

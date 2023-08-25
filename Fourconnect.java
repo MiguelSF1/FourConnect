@@ -5,9 +5,9 @@ public class Fourconnect {
         Scanner in = new Scanner(System.in);
 
         Game board = new Game();
-
         System.out.println("1 player(1) or 2 players(2)");
         int numPlayers = in.nextInt();
+
         switch (numPlayers) {
             case 2:
                 printBoard(board);
@@ -18,20 +18,18 @@ public class Fourconnect {
                         verifyVictory(board);
                         break;
                     }
-
                 }
                 break;
 
             case 1:
                 System.out.println("First player(1) or second player(2)");
                 int fstmove = in.nextInt();
-                if (fstmove == 2) {
-                    board.player = 'X';
-                }
+                if (fstmove == 2) board.player = 'X';
                 System.out.println("Play VS: ");
                 System.out.println("MinMax(1) | AlphaBeta(2) | MonteCarlo(3)");
                 int ai = in.nextInt();
                 printBoard(board);
+
                 while (true) {
                     if (board.player == 'X') {
                         switch (ai) {
@@ -47,9 +45,9 @@ public class Fourconnect {
                             default:
                                 break;
                         }
-                    } else {
-                        board = board.play(in.nextInt() - 1);
                     }
+                    else board = board.play(in.nextInt() - 1);
+
                     printBoard(board);
 
                     if (board.isGameOver()) {

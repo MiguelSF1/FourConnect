@@ -7,11 +7,10 @@ public class Game {
     public char winner;
 
     public Game() {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 7; j++)
                 game[i][j] = ' ';
-            }
-        }
+
         this.player = 'O';
     }
 
@@ -20,9 +19,8 @@ public class Game {
         for (int i = 0; i < 6; i++) {
             System.out.println("--+---+---+---+---+---+---+---+");
             System.out.print((k - i) + " ");
-            for (int j = 0; j < 7; j++) {
+            for (int j = 0; j < 7; j++)
                 System.out.print("| " + game[i][j] + " ");
-            }
             System.out.print("|");
             System.out.println();
         }
@@ -30,58 +28,40 @@ public class Game {
     }
 
     public char playerSwitcher() {
-        if (this.player == 'O') {
-            return 'X';
-        } else {
-            return 'O';
-        }
+        if (this.player == 'O') return 'X';
+        return 'O';
     }
 
     public int howEmpty() {
         int count = 0;
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                if (game[i][j] == ' ') {
-                    count++;
-                }
+                if (game[i][j] == ' ') count++;
             }
         }
         return count;
     }
 
     private boolean outBounds(int x, int y) {
-        if (y < 0 || y > 6 || x > 5 || x < 0) {
-            return false;
-        }
-        return true;
+        return y >= 0 && y <= 6 && x <= 5 && x >= 0;
     }
 
     public boolean isColumnFull(int coluna) {
-        if (game[0][coluna] == ' ') {
-            return false;
-        }
-        return true;
+        return game[0][coluna] != ' ';
     }
 
     public Game play(int a) {
         Game p = new Game();
 
         for (int i = 0; i < 6; i++) {
-            if (outBounds(i, a)) {
-                for (int j = 0; j < 7; j++) {
-                    p.game[i][j] = this.game[i][j];
-                }
-            } else {
-                return this;
-            }
+            if (outBounds(i, a))
+                System.arraycopy(this.game[i], 0, p.game[i], 0, 7);
+            else return this;
         }
 
         for (int i = 0; i < 6; i++) {
-
             if (p.game[i][a] != ' ') {
-                if (i == 0) {
-                    return p;
-                }
+                if (i == 0) return p;
                 p.game[i - 1][a] = player;
                 break;
             }
@@ -89,18 +69,17 @@ public class Game {
                 p.game[i][a] = player;
                 break;
             }
-
         }
         p.player = playerSwitcher();
         return p;
     }
 
     public boolean isGameOver() {
-
         if (this.value() >= 512) {
             this.winner = 'X';
             return true;
-        } else if (this.value() <= -512) {
+        }
+        else if (this.value() <= -512) {
             this.winner = 'O';
             return true;
         }
@@ -113,10 +92,9 @@ public class Game {
                     break;
                 }
             }
-            if (!isDraw) {
-                break;
-            }
+            if (!isDraw) break;
         }
+
         if (isDraw) {
             this.winner = 'D';
             return true;
@@ -130,21 +108,20 @@ public class Game {
 
     public List<Integer> getPossibleMoves() {
         List<Integer> moves = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            if (!isColumnFull(i)) {
-                moves.add(i);
-            }
-        }
+
+        for (int i = 0; i < 7; i++)
+            if (!isColumnFull(i)) moves.add(i);
+
         return moves;
     }
 
     public int value() {
         int total = 0;
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
+
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 7; j++)
                 total += vertical(i, j) + horizontal(i, j) + dEsquerda(i, j) + dDireita(i, j);
-            }
-        }
+
         return total;
     }
 
@@ -156,86 +133,64 @@ public class Game {
             int newRow = row + rowDelta * i;
             int newCol = col + colDelta * i;
 
-            if (!outBounds(newRow, newCol)) {
-                return 0;
-            }
+            if (!outBounds(newRow, newCol)) return 0;
 
-            if (cur == ' ' && game[newRow][newCol] != ' ') {
-                cur = game[newRow][newCol];
-            }
+            if (cur == ' ' && game[newRow][newCol] != ' ') cur = game[newRow][newCol];
 
-            if (game[newRow][newCol] == cur && cur != ' ') {
-                points++;
-            } else if (game[newRow][newCol] != cur && cur != ' ' && game[newRow][newCol] != ' ') {
+            if (game[newRow][newCol] == cur && cur != ' ') points++;
+
+            else if (game[newRow][newCol] != cur && cur != ' ' && game[newRow][newCol] != ' ')
                 points = -3;
-            }
         }
 
         return paridade(points, cur);
     }
 
     private int vertical(int a, int b) {
-        if (a > 2) {
-            return checkLine(a, b, -1, 0);
-        }
+        if (a > 2) return checkLine(a, b, -1, 0);
+
         return 0;
     }
 
     private int horizontal(int a, int b) {
-        if (b < 4) {
-            return checkLine(a, b, 0, 1);
-        }
+        if (b < 4) return checkLine(a, b, 0, 1);
+
         return 0;
     }
 
     private int dDireita(int a, int b) {
-        if (a > 3 && b < 4) {
-            return checkLine(a, b, -1, 1);
-        }
+        if (a > 3 && b < 4) return checkLine(a, b, -1, 1);
+
         return 0;
     }
 
     private int dEsquerda(int a, int b) {
-        if (a > 3 && b > 2) {
-            return checkLine(a, b, -1, -1);
-        }
+        if (a > 3 && b > 2) return checkLine(a, b, -1, -1);
+
         return 0;
     }
 
     private int paridade(int points, char cur) {
-        if (points <= 0) {
-            return 0;
-        } else if (cur == 'O') {
-            if (points == 2) {
-                return -10;
-            } else if (points == 3) {
-                return -50;
-            } else if (points == 1) {
-                return -1;
-            } else {
-                return -10000;
-            }
-        } else {
-            if (points == 2) {
-                return 10;
-            } else if (points == 3) {
-                return 50;
-            } else if (points == 1) {
-                return 1;
-            } else {
-                return 1000;
-            }
+        if (points <= 0) return 0;
+
+        else if (cur == 'O') {
+            if (points == 2) return -10;
+            else if (points == 3) return -50;
+            else if (points == 1) return -1;
+            return -10000;
         }
+
+        if (points == 2) return 10;
+        else if (points == 3) return 50;
+        else if (points == 1) return 1;
+        return 1000;
     }
 
-    public boolean isGameEqual(Game g){
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if(this.game[i][j] != g.game[i][j]){
-                    return false;
-                }
-            }
-        }
+    public boolean isGameEqual(Game g) {
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 7; j++)
+                if (this.game[i][j] != g.game[i][j]) return false;
+
         return true;
     }
 }
